@@ -1,9 +1,14 @@
 const inquirer = require('inquirer')
+const MaxLengthInputPrompt = require('inquirer-maxlength-input-prompt')
 const fs = require('fs')
+
+inquirer.registerPrompt('maxlength-input', MaxLengthInputPrompt)
 
 inquirer 
     .prompt([
         {
+            type: 'maxlength-input',
+            maxLength: 3,
             name: 'text',
             message: 'Please enter three letters for your logo: '
         },
