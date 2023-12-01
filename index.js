@@ -45,11 +45,30 @@ const generateSvg = (userInput) => {
     //
 
     const svgTemplate = `<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">\n\t${shapeCode}\n\t<text x="150" y="100" font-size="60" text-anchor="middle" stroke='black' stroke-width='.5' fill="${textColor}">${text}</text>\n</svg>`
-    fs.writeFile('./Output/generatedIcon.svg', svgTemplate, err => {
-        if (err) {
-            console.error(err)
-        } else {
-            console.log('Icon created! Check output folder.')
+
+    fs.access('Output', (err) => {
+        if (err)
+          fs.mkdir('Output', (err) => {
+            if (err) {
+                return console.log('Unable to create output folder.')
+            }
+            else {
+                createSvgFile()
+            }
+        })
+        else {
+            createSvgFile()
         }
     })
+
+    const createSvgFile = () => {
+        fs.writeFile('./Output/generatedIcon.svg', svgTemplate, err => {
+            if (err) {
+                console.error(err)
+            } else {
+                console.log('Icon created! Check output folder.')
+            }
+        })
+    }
 }
+
